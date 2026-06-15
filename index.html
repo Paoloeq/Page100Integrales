@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>100 Integrales Solucionadas – DF Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0f;
+    --surface: #13131a;
+    --border: #22223a;
+    --accent: #5b6ef5;
+    --accent2: #ff6b35;
+    --text: #f0f0f5;
+    --muted: #8888a8;
+    --card: #16161f;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 60px 20px 80px;
+    position: relative;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(91,110,245,0.18) 0%, transparent 70%);
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: 
+      radial-gradient(circle at 20% 80%, rgba(255,107,53,0.06) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(91,110,245,0.08) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(91,110,245,0.15);
+    border: 1px solid rgba(91,110,245,0.35);
+    color: #a0aaff;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 100px;
+    margin-bottom: 32px;
+  }
+
+  .integral-symbol {
+    font-family: 'Crimson Pro', serif;
+    font-size: 22px;
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero h1 {
+    font-size: clamp(2.2rem, 6vw, 4rem);
+    font-weight: 700;
+    line-height: 1.1;
+    max-width: 750px;
+    margin-bottom: 20px;
+    letter-spacing: -0.02em;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: var(--accent);
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.1em;
+    font-style: italic;
+  }
+
+  .hero-sub {
+    font-size: 1.15rem;
+    color: var(--muted);
+    max-width: 520px;
+    margin-bottom: 48px;
+    line-height: 1.7;
+  }
+
+  .price-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 32px;
+  }
+
+  .price-normal {
+    font-size: 14px;
+    color: var(--muted);
+    text-decoration: line-through;
+  }
+
+  .price-main {
+    font-size: clamp(3rem, 8vw, 5rem);
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+
+  .price-main span {
+    font-size: 0.4em;
+    font-weight: 500;
+    color: var(--muted);
+    vertical-align: super;
+  }
+
+  .price-tag {
+    font-size: 13px;
+    color: var(--accent2);
+    font-weight: 600;
+    background: rgba(255,107,53,0.1);
+    border: 1px solid rgba(255,107,53,0.25);
+    padding: 4px 12px;
+    border-radius: 100px;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    padding: 18px 48px;
+    border-radius: 12px;
+    text-decoration: none;
+    letter-spacing: 0.01em;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 0 40px rgba(91,110,245,0.35);
+    margin-bottom: 16px;
+  }
+
+  .cta-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 60px rgba(91,110,245,0.5);
+  }
+
+  .cta-note {
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  /* PROOF STRIP */
+  .proof-strip {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 32px 48px;
+    padding: 40px 20px;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  .proof-item {
+    text-align: center;
+  }
+
+  .proof-num {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+  }
+
+  .proof-label {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  /* SECTIONS */
+  section {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 80px 20px;
+  }
+
+  .section-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+
+  h2 {
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 48px;
+    line-height: 1.2;
+  }
+
+  /* FOR WHO */
+  .for-who-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+  }
+
+  .for-who-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    font-size: 0.95rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .for-who-card strong {
+    display: block;
+    color: var(--text);
+    font-size: 1rem;
+    margin-bottom: 6px;
+  }
+
+  /* MODULES */
+  .modules-grid {
+    display: grid;
+    gap: 12px;
+  }
+
+  .module-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    transition: border-color 0.2s;
+  }
+
+  .module-card:hover {
+    border-color: var(--accent);
+  }
+
+  .module-num {
+    font-family: 'Crimson Pro', serif;
+    font-size: 2rem;
+    font-style: italic;
+    color: var(--accent);
+    min-width: 36px;
+    line-height: 1;
+    opacity: 0.7;
+  }
+
+  .module-info strong {
+    display: block;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .module-info span {
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .module-badge {
+    margin-left: auto;
+    font-size: 12px;
+    color: var(--accent2);
+    background: rgba(255,107,53,0.1);
+    border: 1px solid rgba(255,107,53,0.2);
+    padding: 3px 10px;
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+
+  /* INCLUDES */
+  .includes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+  }
+
+  .include-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 24px;
+    text-align: center;
+  }
+
+  .include-icon {
+    font-size: 2rem;
+    margin-bottom: 12px;
+  }
+
+  .include-card strong {
+    display: block;
+    font-size: 0.95rem;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .include-card p {
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  /* FINAL CTA */
+  .final-cta {
+    text-align: center;
+    padding: 80px 20px 100px;
+    background: radial-gradient(ellipse 70% 60% at 50% 100%, rgba(91,110,245,0.15) 0%, transparent 70%);
+  }
+
+  .final-cta h2 {
+    margin-bottom: 16px;
+  }
+
+  .final-cta p {
+    color: var(--muted);
+    margin-bottom: 48px;
+    font-size: 1.05rem;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    text-align: center;
+    padding: 32px 20px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  footer a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  @media (max-width: 600px) {
+    .module-badge { display: none; }
+    .proof-strip { gap: 24px 32px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="badge">
+    <span class="integral-symbol">∫</span>
+    DF Academy · Cálculo 1
+  </div>
+  <h1>Las 100 integrales que debes dominar para <em>aprobar Cálculo</em></h1>
+  <p class="hero-sub">Cada integral que aparece en tu examen, resuelta paso a paso. Sin saltar pasos, sin fórmulas caídas del cielo.</p>
+
+  <div class="price-block">
+    <div class="price-main"><span>$</span>27 <span>USD</span></div>
+    <div class="price-tag">🔥 Precio de lanzamiento</div>
+  </div>
+
+  <a href="https://pay.hotmart.com/S105087590R?off=9z9cqvdt" class="cta-btn">Quiero el curso por $27 →</a>
+  <p class="cta-note">✅ Acceso inmediato · Garantía de 7 días · Pago seguro</p>
+</section>
+
+<!-- PROOF STRIP -->
+<div class="proof-strip">
+  <div class="proof-item">
+    <div class="proof-num">100</div>
+    <div class="proof-label">Integrales resueltas</div>
+  </div>
+  <div class="proof-item">
+    <div class="proof-num">10</div>
+    <div class="proof-label">Módulos temáticos</div>
+  </div>
+  <div class="proof-item">
+    <div class="proof-num">∞</div>
+    <div class="proof-label">Acceso de por vida</div>
+  </div>
+  <div class="proof-item">
+    <div class="proof-num">PDF</div>
+    <div class="proof-label">Incluido con respuestas</div>
+  </div>
+</div>
+
+<!-- PARA QUIÉN -->
+<section>
+  <p class="section-label">Para quién es</p>
+  <h2>Este curso es para ti si…</h2>
+  <div class="for-who-grid">
+    <div class="for-who-card">
+      <strong>Tienes examen de Cálculo 1</strong>
+      Necesitas practicar los tipos de integrales que más aparecen en la universidad, con tiempo limitado.
+    </div>
+    <div class="for-who-card">
+      <strong>Ves los pasos pero no entiendes por qué</strong>
+      Aquí cada integral se explica con la lógica detrás, no solo el procedimiento mecánico.
+    </div>
+    <div class="for-who-card">
+      <strong>Quieres ir de cero a resolver solo</strong>
+      Empezamos desde integrales inmediatas básicas hasta nivel examen final, sin saltar etapas.
+    </div>
+  </div>
+</section>
+
+<!-- MÓDULOS -->
+<section style="padding-top: 0;">
+  <p class="section-label">Contenido</p>
+  <h2>10 módulos, 10 integrales cada uno</h2>
+  <div class="modules-grid">
+    <div class="module-card">
+      <div class="module-num">1</div>
+      <div class="module-info">
+        <strong>Integrales Inmediatas Básico</strong>
+        <span>Las formas que debes reconocer al instante</span>
+      </div>
+      <div class="module-badge">10 integrales</div>
+    </div>
+    <div class="module-card">
+      <div class="module-num">2</div>
+      <div class="module-info">
+        <strong>Integrales Inmediatas Intermedio</strong>
+        <span>Un nivel más de complejidad, misma lógica</span>
+      </div>
+      <div class="module-badge">10 integrales</div>
+    </div>
+    <div class="module-card">
+      <div class="module-num">3</div>
+      <div class="module-info">
+        <strong>Sustitución Básica</strong>
+        <span>El método más usado en exámenes de Cálculo 1</span>
+      </div>
+      <div class="module-badge">10 integrales</div>
+    </div>
+    <div class="module-card">
+      <div class="module-num">4</div>
+      <div class="module-info">
+        <strong>Sustitución Intermedia</strong>
+        <span>Casos donde la sustitución no es obvia</span>
+      </div>
+      <div class="module-badge">10 integrales</div>
+    </div>
+    <div class="module-card">
+      <div class="module-num">5</div>
+      <div class="module-info">
+        <strong>Integración por Partes – Nivel 1</strong>
+        <span>La fórmula uv y cuándo aplicarla</span>
+      </div>
+      <div class="module-badge">10 integrales</div>
+    </div>
+    <div class="module-card">
+      <div class="module-num">6</div>
+      <div class="module-info">
+        <strong>Integración por Partes – Nivel 2</strong>
+        <span>Casos que requieren aplicar el método dos veces</span>
+      </div>
+      <div class="module-badge">10 integrales</div>
+    </div>
+    <div class="module-card">
+      <div class="module-num">7</div>
+      <div class="module-info">
+        <strong>Integrales Trigonométricas</strong>
+        <span>Senos, cosenos y tangentes que cambian de forma</span>
+      </div>
+      <div class="module-badge">10 integrales</div>
+    </div>
+    <div class="module-card">
+      <div class="module-num">8</div>
+      <div class="module-info">
+        <strong>Fracciones Parciales</strong>
+        <span>Cómo descomponer expresiones racionales</span>
+      </div>
+      <div class="module-badge">10 integrales</div>
+    </div>
+    <div class="module-card">
+      <div class="module-num">9</div>
+      <div class="module-info">
+        <strong>Sustitución Trigonométrica</strong>
+        <span>Para raíces cuadradas que no ceden a otros métodos</span>
+      </div>
+      <div class="module-badge">10 integrales</div>
+    </div>
+    <div class="module-card" style="border-color: rgba(255,107,53,0.4); background: rgba(255,107,53,0.04);">
+      <div class="module-num" style="color: var(--accent2);">10</div>
+      <div class="module-info">
+        <strong>Mixto Tipo Examen Final 🎯</strong>
+        <span>Integrales mezcladas como las que vienen en la prueba real</span>
+      </div>
+      <div class="module-badge">10 integrales</div>
+    </div>
+  </div>
+</section>
+
+<!-- QUÉ INCLUYE -->
+<section style="padding-top: 0;">
+  <p class="section-label">Qué incluye</p>
+  <h2>Todo lo que necesitas para el examen</h2>
+  <div class="includes-grid">
+    <div class="include-card">
+      <div class="include-icon">🎬</div>
+      <strong>100 videos paso a paso</strong>
+      <p>Cada integral resuelta en video, explicando la lógica en cada paso</p>
+    </div>
+    <div class="include-card">
+      <div class="include-icon">📄</div>
+      <strong>PDF completo</strong>
+      <p>Las 100 integrales con enunciado y respuesta para practicar</p>
+    </div>
+    <div class="include-card">
+      <div class="include-icon">♾️</div>
+      <strong>Acceso de por vida</strong>
+      <p>Vuelve al curso cada vez que tengas un examen de Cálculo</p>
+    </div>
+    <div class="include-card">
+      <div class="include-icon">🔄</div>
+      <strong>Actualizaciones incluidas</strong>
+      <p>Si el curso crece, tú lo recibes sin pagar de nuevo</p>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<div class="final-cta">
+  <p class="section-label" style="text-align:center;">Precio de lanzamiento</p>
+  <h2>Empieza hoy por $27 USD</h2>
+  <p>Acceso inmediato después del pago</p>
+  <a href="https://pay.hotmart.com/S105087590R?off=9z9cqvdt" class="cta-btn">Quiero el curso por $27 →</a>
+  <p class="cta-note" style="margin-top: 16px;">🔒 Pago seguro por Hotmart</p>
+
+  <div style="margin-top: 40px; background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 32px; max-width: 480px; margin-left: auto; margin-right: auto;">
+    <div style="font-size: 2.5rem; margin-bottom: 12px;">🛡️</div>
+    <strong style="font-size: 1.1rem; display: block; margin-bottom: 10px;">Garantía de 7 días</strong>
+    <p style="color: var(--muted); font-size: 0.95rem; line-height: 1.7;">Si en 7 días sientes que no aprendiste nada, te devuelvo el dinero. Sin preguntas, sin trámites complicados. El riesgo es mío, no tuyo.</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>DF Academy · <strong>Demostrando Fórmulas</strong> · <a href="https://www.instagram.com/demostrandoformulas/" target="_blank">@demostrandoformulas</a></p>
+  <p style="margin-top: 8px;">Paolo Emanuel Quispe Quiroz · Ing. Sistemas & Mecánico · Docente universitario</p>
+</footer>
+
+</body>
+</html>
